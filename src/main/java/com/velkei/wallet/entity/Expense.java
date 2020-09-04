@@ -1,21 +1,23 @@
 package com.velkei.wallet.entity;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import lombok.NoArgsConstructor;
+
+import javax.persistence.*;
 
 @Entity
+@NoArgsConstructor
 public class Expense {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
-    @Column(nullable = false)
+    @Column
     private String name;
 
-    @Column(nullable = false)
+    @Column
     private int amount;
 
+    @Column
+    private String description;
 }

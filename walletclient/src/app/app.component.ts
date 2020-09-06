@@ -20,6 +20,9 @@ export class AppComponent {
         this.expenses = data;
       }
     );
-  }
+  };
+
+  
+
 
 }

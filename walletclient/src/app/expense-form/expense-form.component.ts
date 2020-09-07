@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { HomeService } from '../services/home.service';
-import { Expensepost } from '../classes/expensepost';
+import { FormGroup, FormControl } from '@angular/forms';
+
 import { Expense } from '../classes/expense'
 
 @Component({
@@ -10,8 +11,12 @@ import { Expense } from '../classes/expense'
 })
 export class ExpenseFormComponent implements OnInit {
 
-  name: string;
-  expensepost: Expensepost;
+  expenseForm = new FormGroup({
+    name: new FormControl(''),
+    amount: new FormControl(''),
+    description: new FormControl(''),
+  });
+
   expenses:Expense[];
 
   constructor(private homeService: HomeService) { }
@@ -19,25 +24,14 @@ export class ExpenseFormComponent implements OnInit {
   ngOnInit() {
   }
 
-  callFunction(event){
-    console.log(<HTMLInputElement>document.getElementById("userName").value);
-    
-    console.log(<HTMLInputElement>document.getElementById("amount").value);
-    
-    console.log(<HTMLInputElement>document.getElementById("description").value);
+  onSubmit() {
 
-    this.expensepost = new Expensepost();
-
-    this.expensepost.userName = <string>(<HTMLInputElement>document.getElementById("userName").value);
-    this.expensepost.amount = <number>(<HTMLInputElement>document.getElementById("amount").value);
-    this.expensepost.description = <string>(<HTMLInputElement>document.getElementById("description").value);
-
-    this.homeService.setExpenses(this.expensepost).subscribe(
+    this.homeService.setExpenses(this.expenseForm.value).subscribe(
       data=>{
         this.expenses = data;
       }
     );
 
-  };
+  }
 
 }

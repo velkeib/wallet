@@ -4,6 +4,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.Date;
 
 @Entity
 @NoArgsConstructor
@@ -15,11 +16,15 @@ public class Expense {
     private long id;
 
     @Column
-    private String userName;
+    private String name;
 
     @Column
     private int amount;
 
     @Column
     private String description;
+
+    @Column
+    private Date date;
+
 }

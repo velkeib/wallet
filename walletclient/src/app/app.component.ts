@@ -1,6 +1,4 @@
 import { Component } from '@angular/core';
-import { HomeService } from './services/home.service';
-import { Expense } from './classes/expense'
 
 @Component({
   selector: 'app-root',
@@ -10,19 +8,13 @@ import { Expense } from './classes/expense'
 export class AppComponent {
   title = 'app';
 
-  constructor(private homeService: HomeService) { }
+  constructor() { }
 
-  expenses:Expense[];
+  ngOnInit() {
 
-  ngOnInit(){
-    this.homeService.getExpenses().subscribe(
-      data=>{
-        this.expenses = data;
-      }
-    );
   };
 
-  
+
 
 
 }

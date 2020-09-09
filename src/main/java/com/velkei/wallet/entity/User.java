@@ -5,29 +5,19 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.util.Calendar;
+import java.util.Date;
+import java.util.Set;
 
 @Entity
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
 @Data
-public class Expense {
+public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
     @Column
-    private int amount;
-
-    @Column
-    private String description;
-
-    @ManyToOne
-    @JoinColumn(name = "name", nullable=false)
-    private User name;
-
-    @Column
-    private Calendar date;
-
+    private String userName ;
 }

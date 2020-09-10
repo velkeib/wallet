@@ -17,7 +17,7 @@ export class ExpenseFormComponent implements OnInit {
     amount: new FormControl(''),
     description: new FormControl(''),
   });
-  expenses: Object[];
+  expenses: number[][];
   monthNames = ["Január", "Február", "Március", "Április", "Május", "Június", "Július", "Augusztus", "Szeptember", "Október", "November", "December"];
 
   constructor(private homeService: HomeService) { }
@@ -28,11 +28,17 @@ export class ExpenseFormComponent implements OnInit {
       data => {
         this.expenses = data;
         console.log(this.expenses);
+        this.loadChart(this.expenses);
       }
     );
 
       
 
+    
+  }
+
+
+  loadChart(data:number[][]){
     var myChart = new Chart('expenseChart', {
       type: 'bar',
       data: {
@@ -41,16 +47,12 @@ export class ExpenseFormComponent implements OnInit {
           label: 'Dataset 1',
           backgroundColor: 'rgba(255, 99, 132, 0.2)',
           stack: 'Stack 0',
-          data: [
-            4, 5, 6, 7, 9, 1
-          ]
+          data: this.expenses[0]
         }, {
           label: 'Dataset 2',
           backgroundColor: 'rgba(54, 162, 235, 0.2)',
           stack: 'Stack 1',
-          data: [
-            4, 5, 6, 7, 8, 9
-          ]
+          data: this.expenses[1]
         }]
 
       },
@@ -65,6 +67,7 @@ export class ExpenseFormComponent implements OnInit {
       }
     });
   }
+
 
   getCurrentMonth() {
     var d = new Date();

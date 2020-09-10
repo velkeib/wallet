@@ -1,6 +1,6 @@
 package com.velkei.wallet.controller;
 
-
+import com.velkei.wallet.dto.ChartData;
 import com.velkei.wallet.WalletApplication;
 import com.velkei.wallet.entity.User;
 import com.velkei.wallet.repository.ExpenseRepository;
@@ -32,30 +32,17 @@ public class HomeController {
     @RequestMapping(value = "/expenses", method= RequestMethod.GET)
     @ResponseBody
     public ResponseEntity<?> getExpenses(){
+        List<ChartData> getChartDataResult = expenseRepository.getChartData(calculateSixMonthsBefore());
 
-        int[] response = new int[2]; //later could be the group size;
+        int[][] response = new int[2][6];
 
-        Calendar sixMonthsBefore =  calculateSixMonthsBefore();
-
-        List<Object> result = expenseRepository.getChartData(sixMonthsBefore);
-
-        sixMonthsBefore.get(Calendar.MONTH);
-
-        int[] user = new int[6];
-
-        for(int i = 0; i < result.size(); i++){
-
+        for(int i = 0; i < getChartDataResult.size(); i++){
+            response[(int) getChartDataResult.get(i).getName() - 1][getChartDataResult.get(i).getOff()] = getChartDataResult.get(i).getAmount();
         }
 
-
-
-
-
-
-
         return ResponseEntity.ok()
-                .body(expenseRepository.getChartData(sixMonthsBefore));
-  
+                .body(response);
+
     }
 
     @RequestMapping(value = "/expenses", method= RequestMethod.POST)
@@ -81,19 +68,20 @@ public class HomeController {
             userRepository.save(new User(1L, "Bence"));
             userRepository.save(new User(2L, "Gabika"));
 
-            expenseRepository.save(new Expense(5L, 2000, "szék", userRepository.findById(1L).get(), new GregorianCalendar(2020, 5, 27)));
+            /*expenseRepository.save(new Expense(5L, 2000, "szék", userRepository.findById(1L).get(), new GregorianCalendar(2020, 5, 27)));
             expenseRepository.save(new Expense(6L, 2000, "szék", userRepository.findById(1L).get(), new GregorianCalendar(2020, 6, 27)));
+         */
             expenseRepository.save(new Expense(7L, 2000, "szék", userRepository.findById(1L).get(), new GregorianCalendar(2020, 7, 27)));
             expenseRepository.save(new Expense(8L, 2000, "szék", userRepository.findById(1L).get(), new GregorianCalendar(2020, 7, 27)));
 
-            expenseRepository.save(new Expense(9L, 2000, "szék", userRepository.findById(2L).get(), new GregorianCalendar(2020, 5, 27)));
-            expenseRepository.save(new Expense(10L, 2000, "szék", userRepository.findById(2L).get(), new GregorianCalendar(2020, 5, 27)));
-            expenseRepository.save(new Expense(11L, 2000, "szék", userRepository.findById(2L).get(), new GregorianCalendar(2020, 6, 27)));
-            expenseRepository.save(new Expense(12L, 2000, "szék", userRepository.findById(2L).get(), new GregorianCalendar(2020, 6, 27)));
+            expenseRepository.save(new Expense(9L, 2000, "szék", userRepository.findById(2L).get(), new GregorianCalendar(2020, 2, 27)));
+            expenseRepository.save(new Expense(10L, 2000, "szék", userRepository.findById(2L).get(), new GregorianCalendar(2020, 3, 27)));
+            expenseRepository.save(new Expense(11L, 2000, "szék", userRepository.findById(2L).get(), new GregorianCalendar(2020, 4, 27)));
+            expenseRepository.save(new Expense(12L, 2000, "szék", userRepository.findById(2L).get(), new GregorianCalendar(2020, 5, 27)));
             expenseRepository.save(new Expense(13L, 2000, "szék", userRepository.findById(2L).get(), new GregorianCalendar(2020, 6, 27)));
             expenseRepository.save(new Expense(14L, 2000, "szék", userRepository.findById(2L).get(), new GregorianCalendar(2020, 7, 27)));
-            expenseRepository.save(new Expense(15L, 2000, "szék", userRepository.findById(2L).get(), new GregorianCalendar(2020, 7, 27)));
-            expenseRepository.save(new Expense(16L, 2000, "szék", userRepository.findById(2L).get(), new GregorianCalendar(2019, 7, 27)));
+            expenseRepository.save(new Expense(15L, 2000, "szék", userRepository.findById(2L).get(), new GregorianCalendar(2020, 8, 27)));
+            //expenseRepository.save(new Expense(16L, 2000, "szék", userRepository.findById(2L).get(), new GregorianCalendar(2019, 8, 27)));
         };
     }
 
@@ -102,13 +90,13 @@ public class HomeController {
 
         Calendar calendar = new GregorianCalendar();
 
-        calendar.set(Calendar.DAY_OF_MONTH, 0);
+        calendar.set(Calendar.DAY_OF_MONTH, 1);
         calendar.set(Calendar.HOUR_OF_DAY, 0);
         calendar.set(Calendar.MINUTE, 0);
         calendar.set(Calendar.SECOND, 0);
         calendar.set(Calendar.MILLISECOND, 0);
 
-        calendar.add(Calendar.MONTH, -6);
+        calendar.set(Calendar.MONTH, (calendar.get(Calendar.MONTH) - 5) % 12);
 
         return calendar;
 

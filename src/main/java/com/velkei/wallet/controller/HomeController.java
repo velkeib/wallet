@@ -1,7 +1,10 @@
 package com.velkei.wallet.controller;
 
 import com.velkei.wallet.dto.ChartData;
+import com.velkei.wallet.dto.ChartDataInterface;
 import com.velkei.wallet.WalletApplication;
+import com.velkei.wallet.dto.ChartPageResponse;
+import com.velkei.wallet.dto.ExpenseDTO;
 import com.velkei.wallet.entity.User;
 import com.velkei.wallet.repository.ExpenseRepository;
 import com.velkei.wallet.repository.UserRepository;
@@ -14,7 +17,6 @@ import com.velkei.wallet.entity.Expense;
 import org.springframework.context.annotation.Bean;
 import org.springframework.boot.CommandLineRunner;
 
-import java.time.Instant;
 import java.util.*;
 
 @RestController
@@ -32,25 +34,41 @@ public class HomeController {
     @RequestMapping(value = "/expenses", method= RequestMethod.GET)
     @ResponseBody
     public ResponseEntity<?> getExpenses(){
-        List<ChartData> getChartDataResult = expenseRepository.getChartData(calculateSixMonthsBefore());
+        List<ChartDataInterface> getChartDataResult = expenseRepository.getChartData(calculateSixMonthsBefore());
 
-        int[][] response = new int[2][6];
+        int[][] data = new int[2][6];
+
+        ArrayList<ChartData> response = new ArrayList<>();
 
         for(int i = 0; i < getChartDataResult.size(); i++){
-            response[(int) getChartDataResult.get(i).getName() - 1][getChartDataResult.get(i).getOff()] = getChartDataResult.get(i).getAmount();
+
+            data[getChartDataResult.get(i).getRank() - 1][getChartDataResult.get(i).getOff()] = getChartDataResult.get(i).getAmount();
+
+            if(i < getChartDataResult.size() -1 && getChartDataResult.get(i).getName() != getChartDataResult.get(i + 1).getName()){
+                response.add(new ChartData(getChartDataResult.get(i).getUserName(), data[getChartDataResult.get(i).getRank() - 1]));
+            }
         }
+
+        response.add(new ChartData(getChartDataResult.get(getChartDataResult.size()-1).getUserName(), data[getChartDataResult.get(getChartDataResult.size() - 1).getRank() - 1]));
 
         return ResponseEntity.ok()
                 .body(response);
+    }
 
+    @RequestMapping(value = "/users", method= RequestMethod.GET)
+    @ResponseBody
+    public ResponseEntity<?> getUsers(){
+
+        return ResponseEntity.ok()
+                .body(userRepository.findAll());
     }
 
     @RequestMapping(value = "/expenses", method= RequestMethod.POST)
     @ResponseBody
-    public ResponseEntity<?> setExpenses(@RequestBody Expense expense){
+    public ResponseEntity<?> setExpenses(@RequestBody ExpenseDTO expense){
 
         Expense expenseEntity = new Expense();
-        expenseEntity.setName(expense.getName());
+        expenseEntity.setUserName(userRepository.findById(Long.parseLong(expense.getName())).get());
         expenseEntity.setAmount(expense.getAmount());
         expenseEntity.setDescription(expense.getDescription());
         expenseEntity.setDate(new GregorianCalendar());
@@ -70,7 +88,7 @@ public class HomeController {
 
             /*expenseRepository.save(new Expense(5L, 2000, "szék", userRepository.findById(1L).get(), new GregorianCalendar(2020, 5, 27)));
             expenseRepository.save(new Expense(6L, 2000, "szék", userRepository.findById(1L).get(), new GregorianCalendar(2020, 6, 27)));
-         */
+
             expenseRepository.save(new Expense(7L, 2000, "szék", userRepository.findById(1L).get(), new GregorianCalendar(2020, 7, 27)));
             expenseRepository.save(new Expense(8L, 2000, "szék", userRepository.findById(1L).get(), new GregorianCalendar(2020, 7, 27)));
 
@@ -80,7 +98,7 @@ public class HomeController {
             expenseRepository.save(new Expense(12L, 2000, "szék", userRepository.findById(2L).get(), new GregorianCalendar(2020, 5, 27)));
             expenseRepository.save(new Expense(13L, 2000, "szék", userRepository.findById(2L).get(), new GregorianCalendar(2020, 6, 27)));
             expenseRepository.save(new Expense(14L, 2000, "szék", userRepository.findById(2L).get(), new GregorianCalendar(2020, 7, 27)));
-            expenseRepository.save(new Expense(15L, 2000, "szék", userRepository.findById(2L).get(), new GregorianCalendar(2020, 8, 27)));
+            expenseRepository.save(new Expense(15L, 2000, "szék", userRepository.findById(2L).get(), new GregorianCalendar(2020, 8, 27)));*/
             //expenseRepository.save(new Expense(16L, 2000, "szék", userRepository.findById(2L).get(), new GregorianCalendar(2019, 8, 27)));
         };
     }

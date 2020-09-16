@@ -25,7 +25,7 @@ public class Expense {
 
     @ManyToOne
     @JoinColumn(name = "name", nullable=false)
-    private User name;
+    private User userName;
 
     @Column
     private Calendar date;

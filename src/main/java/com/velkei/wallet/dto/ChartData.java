@@ -1,11 +1,13 @@
 package com.velkei.wallet.dto;
 
-import java.sql.Date;
-import java.util.Calendar;
-import java.util.GregorianCalendar;
+import lombok.AllArgsConstructor;
+import lombok.Value;
 
-public interface ChartData {
-    int getAmount();
-    long getName();
-    int getOff();
+@Value
+@AllArgsConstructor
+public class ChartData {
+
+    String name;
+    int[] data;
+
 }

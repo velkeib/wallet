@@ -11,4 +11,6 @@ public class ExpenseDTO {
 
     private String description;
 
+    private String date;
+
 }

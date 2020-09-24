@@ -1,19 +1,26 @@
-<form  [formGroup]="expenseForm" (ngSubmit)="onSubmit()">
-    <div class="form-group">
-      <label for="exampleFormControlInput1">Név</label>
-      <select [(ngModel)]="name" class="form-control" id="name" formControlName="name">
+<form [formGroup]="expenseForm" (ngSubmit)="onSubmit()">
+  <div class="form-group row m-2">
+    <div class="col-sm-6">
+      <select [(ngModel)]="name" id="name" formControlName="name" placeholder="Név">
+        <option [ngValue]="undefined" hidden>Név</option>
         <option *ngFor="let i of this.users" [value]="i.id">
           {{i.userName}}
         </option>
       </select>
     </div>
-    <div class="form-group">
-      <label for="exampleFormControlInput1">Összeg</label>
-      <input type="text" class="form-control" id="amount" formControlName="amount">
+    <div class="col-sm-6">
+      <input type="text" id="amount" placeholder="Összeg" autocomplete="off" formControlName="amount">
     </div>
-    <div class="form-group">
-      <label for="exampleFormControlInput1">Leírás</label>
-      <input type="text" class="form-control" id="description" formControlName="description">
+  </div>
+  <div class="form-group row m-2">
+    <div class="col-sm-6">
+      <input type="text" id="description" placeholder="Leírás" autocomplete="off" formControlName="description">
     </div>
+    <div class="col-sm-6">
+      <input type="date" id="date" placeholder="Dátum" formControlName="date">
+    </div>
+  </div>
+  <div class="m-3 mt-5 d-flex justify-content-center">
     <button type="submit" class="btn btn-primary">Küld</button>
-  </form>
+  </div>
+</form>

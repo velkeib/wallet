@@ -1,3 +1,66 @@
-<div class="chart-container" style="position: relative; width:100%">
-    <canvas id="expenseChart"></canvas>
+<div class="container">
+  <div class="row pb-4 mt-4 mb-4">
+    <div class="col-md-8">
+      <div class="card col-md-12 px-0">
+        <div class="card-header">
+          Elmúlt 6 hónap
+        </div>
+        <div class="m-4" style="height: 25vh;">
+          <canvas id="expenseChart" style="height: 100%"></canvas>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="card col-md-12 px-0 h-100">
+        <div class="card-header">
+          Elmúlt 6 hónap összeg
+        </div>
+        <div class="card ml-2 mt-2 mr-2" *ngFor="let expenses of doughnutChartExpenses">
+          <div class="card-body pl-4 pr-4 pb-2 pt-2">
+            <h5 class="card-title">{{expenses.name}}</h5>
+            <p class="card-text font-weight-bold">{{expenses.data}} HUF </p>
+          </div>
+        </div>
+        <hr class="m-0 mt-2">
+        <div class="card mb-2 ml-2 mt-2 mr-2">
+          <div class="card-body pl-4 pr-4 pb-2 pt-2">
+            <h5 class="card-title">Összesen</h5>
+            <p class="card-text font-weight-bold">{{sum}} HUF </p>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
+  <div class="row mb-2" style="height: 30vh;">
+    <div class="col-md-6 mb-2 pr-1">
+      <div class="card p-0 col-md-12 h-100">
+        <div class="card-header">
+          Aktuális hónap
+        </div>
+        <div class="row  h-100">
+          <div class="col-6 h-85 mt-2 align-middle">
+            <canvas id="doughnutChart" style="height: 100%"></canvas>
+          </div>
+          <div class="col-6 h-100">
+            <div class="card mb-2 mt-2 mr-2" *ngFor="let user of expenses">
+              <div class="card-body">
+                <h5 class="card-title">{{user.name}}</h5>
+                <p class="card-text font-weight-bold">{{user.data[5]}} HUF </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6 mb-2 pl-1">
+      <div class="card p-0 col-md-12 h-100">
+        <div class="card-header">
+          Költség bevitele
+        </div>
+        <div class="my-auto">
+          <app-expense-form></app-expense-form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

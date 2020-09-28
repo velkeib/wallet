@@ -56,7 +56,7 @@ public class HomeServiceImpl implements HomeService {
         expenseEntity.setUserName(userRepository.findById(Long.parseLong(expense.getName())).get());
         expenseEntity.setAmount(expense.getAmount());
         expenseEntity.setDescription(expense.getDescription());
-        expenseEntity.setDate(calendar);
+        expenseEntity.setDate( !expense.getDate().equals("") ? calendar : new GregorianCalendar());
 
         return expenseRepository.save(expenseEntity);
 

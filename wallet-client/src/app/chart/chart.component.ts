@@ -14,6 +14,8 @@ export class ChartComponent implements OnInit {
 
   constructor(private homeService: HomeService) { }
 
+
+  colors = [];
   sum = 0;
   myDoughnutChart;
   myChart;
@@ -34,13 +36,29 @@ export class ChartComponent implements OnInit {
 
   loadChart() {
 
+
+    var bar_ctx =  (<Chart> document.getElementById('expenseChart')).getContext('2d');
+
+    var background_1 = bar_ctx.createLinearGradient(0, 0, 0, 300);
+    background_1.addColorStop(0, '#FFE400');
+    background_1.addColorStop(1, '#FF5733');
+
+    var background_2 = bar_ctx.createLinearGradient(0, 0, 0, 300);
+    background_2.addColorStop(0, '#00FFD1');
+    background_2.addColorStop(1, '#00BDDA');
+
+
+
+    this.colors.push('linear-gradient(to bottom right, #FFE400 , #FF5733)');
+    this.colors.push('linear-gradient(to bottom right, #00FFD1 , #00BDDA)');
+
     this.myDoughnutChart = new Chart('doughnutChart', {
       type: 'doughnut',
       data: {
         labels: [this.expenses[0].name, this.expenses[1].name],
         datasets: [
           {
-            backgroundColor: ["#3e95cd", "#FF1493", "#3cba9f", "#e8c3b9", "#c45850"],
+            backgroundColor: [background_1, background_2, "#3cba9f", "#e8c3b9", "#c45850"],
             data: [this.expenses[0].data[5], this.expenses[1].data[5]]
           }
         ]
@@ -65,12 +83,12 @@ export class ChartComponent implements OnInit {
         labels: this.getLastSixMonths(),
         datasets: [{
           label: this.expenses[0].name,
-          backgroundColor: '#3e95cd',
+          backgroundColor:  background_1,
           stack: 'Stack 0',
           data: this.expenses[0].data
         }, {
           label: this.expenses[1].name,
-          backgroundColor: '#FF1493',
+          backgroundColor: background_2,
           stack: 'Stack 1',
           data: this.expenses[1].data
         }]
@@ -84,8 +102,31 @@ export class ChartComponent implements OnInit {
         },
         scales: {
           yAxes: [{
+            position: 'right',
+            gridLines: {
+              color: "#000000",
+              drawBorder: false,
+              display: true,
+              lineWidth: 3,
+              maxTicksLimit: 3,
+            },
             ticks: {
-              beginAtZero: true
+              beginAtZero: true,
+              fontColor: '#000000',
+              fontSize: 14,
+              padding: 10
+            }
+          }],
+          xAxes: [{
+            gridLines: {
+              display: false,
+              color: "#BDBDBD",
+            },
+            ticks: {
+              beginAtZero: true,
+              fontColor: '#000000',
+              fontStyle: 'bold',
+              fontSize: 14
             }
           }]
         }
@@ -136,6 +177,7 @@ export class ChartComponent implements OnInit {
   sumOfData() {
 
     this.doughnutChartExpenses = [];
+    this.sum = 0;
 
     for (var i = 0; i < this.expenses.length; i++) {
 

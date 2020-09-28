@@ -1,37 +1,5 @@
 <div class="container">
-  <div class="row pb-4 mt-4 mb-4">
-    <div class="col-md-8 p-1">
-      <div class="card col-md-12 px-0 cardbgcolour border-dark">
-        <div class="card-header text-black headerbgcolour font-weight-bold">
-          Elmúlt 6 hónap
-        </div>
-        <div class="m-4" style="height: 100%;">
-          <canvas id="expenseChart" style="height: 100%"></canvas>
-        </div>
-      </div>
-    </div>
-    <div class="col-md-4 p-1">
-      <div class="card col-md-12 px-0 h-100 cardbgcolour border-dark">
-        <div class="card-header text-black headerbgcolour font-weight-bold">
-          Elmúlt 6 hónap összeg
-        </div>
-        <div class="card ml-2 mt-2 mr-2 border-dark" *ngFor="let expenses of doughnutChartExpenses; index as i">
-          <div class="card-body pl-4 pr-4 pb-2 pt-2" [ngStyle]="{'background-image': colors[i]}">
-            <h5 class="card-title">{{expenses.name}}</h5>
-            <p class="card-text font-weight-bold">{{expenses.data}} HUF </p>
-          </div>
-        </div>
-        <hr class="m-0 mt-2">
-        <div class="card mb-2 ml-2 mt-2 mr-2">
-          <div class="card-body pl-4 pr-4 pb-2 pt-2 headerbgcolour">
-            <h5 class="card-title">Összesen</h5>
-            <p class="card-text font-weight-bold">{{sum}} HUF </p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="row mb-2">
+  <div class="row mb-1">
     <div class="col-md-6 mb-2 p-1 h-100">
       <div class="card p-0 col-md-12 h-100 cardbgcolour border-dark">
         <div class="card-header text-black headerbgcolour font-weight-bold">
@@ -59,6 +27,38 @@
         </div>
         <div class="my-auto">
           <app-expense-form></app-expense-form>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row pb-4 mb-4">
+    <div class="col-md-8 p-1">
+      <div class="card col-md-12 px-0 cardbgcolour border-dark">
+        <div class="card-header text-black headerbgcolour font-weight-bold">
+          Elmúlt 6 hónap
+        </div>
+        <div class="m-4" style="height: 100%;">
+          <canvas id="expenseChart" style="height: 100%"></canvas>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4 p-1">
+      <div class="card col-md-12 px-0 h-100 cardbgcolour border-dark">
+        <div class="card-header text-black headerbgcolour font-weight-bold">
+          Elmúlt 6 hónap összeg
+        </div>
+        <div class="card ml-2 mt-2 mr-2 border-dark" *ngFor="let expenses of doughnutChartExpenses; index as i">
+          <div class="card-body pl-4 pr-4 pb-2 pt-2" [ngStyle]="{'background-image': colors[i]}">
+            <h5 class="card-title">{{expenses.name}}</h5>
+            <p class="card-text font-weight-bold">{{expenses.data}} HUF </p>
+          </div>
+        </div>
+        <hr class="m-0 mt-2">
+        <div class="card mb-2 ml-2 mt-2 mr-2">
+          <div class="card-body pl-4 pr-4 pb-2 pt-2 headerbgcolour">
+            <h5 class="card-title">Összesen</h5>
+            <p class="card-text font-weight-bold">{{sum}} HUF </p>
+          </div>
         </div>
       </div>
     </div>

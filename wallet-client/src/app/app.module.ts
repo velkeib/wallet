@@ -10,12 +10,14 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { ChartComponent } from './chart/chart.component';
 import { ExpenseFormComponent } from './expense-form/expense-form.component';
+import { LoginComponent } from './login/login.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     ChartComponent,
-    ExpenseFormComponent
+    ExpenseFormComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,

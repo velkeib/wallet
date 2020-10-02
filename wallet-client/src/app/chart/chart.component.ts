@@ -22,13 +22,18 @@ export class ChartComponent implements OnInit {
   doughnutChartExpenses: Expense[];
   expenses: Expense[];
   monthNames = ["Január", "Február", "Március", "Április", "Május", "Június", "Július", "Augusztus", "Szeptember", "Október", "November", "December"];
+  loading = false;
+
 
   ngOnInit() {
+
+    this.loading = true;
 
     this.homeService.getExpenses().subscribe(
       data => {
         this.expenses = data;
         this.loadChart();
+        this.loading = false;
       }
     );
 

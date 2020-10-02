@@ -18,10 +18,11 @@ import com.velkei.wallet.entity.Expense;
 import org.springframework.context.annotation.Bean;
 import org.springframework.boot.CommandLineRunner;
 
+import java.security.Principal;
 import java.util.*;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:4200", maxAge = 3600)
+@CrossOrigin(origins = "*")
 public class HomeController {
 
     @Autowired
@@ -55,8 +56,6 @@ public class HomeController {
     @ResponseBody
     public ResponseEntity<?> setExpenses(@RequestBody ExpenseDTO expense) throws Exception{
 
-        log.info(expense.getDate());
-
         return ResponseEntity.ok()
                 .body(homeService.setExpenseEntity(expense));
     }
@@ -65,8 +64,8 @@ public class HomeController {
     public CommandLineRunner demo(UserRepository userRepository, ExpenseRepository expenseRepository) {
         return (args) -> {
 
-            userRepository.save(new User(1L, "Bence"));
-            userRepository.save(new User(2L, "Gabika"));
+            userRepository.save(new User(1L, "Bence", "test"));
+            userRepository.save(new User(2L, "Gabika", "test2"));
 
             /*expenseRepository.save(new Expense(5L, 2000, "szék", userRepository.findById(1L).get(), new GregorianCalendar(2020, 5, 27)));
             expenseRepository.save(new Expense(6L, 2000, "szék", userRepository.findById(1L).get(), new GregorianCalendar(2020, 6, 27)));

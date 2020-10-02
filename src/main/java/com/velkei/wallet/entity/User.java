@@ -14,10 +14,17 @@ import java.util.Set;
 @Data
 public class User {
 
+    public User(String  userName, String password){
+        
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
     @Column
     private String userName ;
+
+    @Column
+    private String password ;
 }

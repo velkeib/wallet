@@ -47,16 +47,18 @@ public class HomeServiceImpl implements HomeService {
     @Override
     public Expense setExpenseEntity(ExpenseDTO expense) throws Exception{
 
-        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-        Date date = dateFormat.parse(expense.getDate());
         GregorianCalendar calendar = new GregorianCalendar();
-        calendar.setTime(date);
 
+        if(!expense.getDate().equals("")) {
+            DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+            Date date = dateFormat.parse(expense.getDate());
+            calendar.setTime(date);
+        }
         Expense expenseEntity = new Expense();
         expenseEntity.setUserName(userRepository.findById(Long.parseLong(expense.getName())).get());
         expenseEntity.setAmount(expense.getAmount());
         expenseEntity.setDescription(expense.getDescription());
-        expenseEntity.setDate( !expense.getDate().equals("") ? calendar : new GregorianCalendar());
+        expenseEntity.setDate(calendar);
 
         return expenseRepository.save(expenseEntity);
 

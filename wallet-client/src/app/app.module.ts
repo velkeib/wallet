@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { ReactiveFormsModule, FormsModule  } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 
@@ -11,13 +11,14 @@ import { AppComponent } from './app.component';
 import { ChartComponent } from './chart/chart.component';
 import { ExpenseFormComponent } from './expense-form/expense-form.component';
 import { LoginComponent } from './login/login.component';
+import { BasicAuthInterceptor } from './_helper/basic-auth.interceptor';
 
 @NgModule({
   declarations: [
     AppComponent,
     ChartComponent,
     ExpenseFormComponent,
-    LoginComponent
+    LoginComponent,
   ],
   imports: [
     BrowserModule,
@@ -27,7 +28,8 @@ import { LoginComponent } from './login/login.component';
     FormsModule,
     CommonModule
   ],
-  providers: [HomeService],
+  providers: [{ provide: HTTP_INTERCEPTORS, useClass: BasicAuthInterceptor, multi: true },
+    HomeService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

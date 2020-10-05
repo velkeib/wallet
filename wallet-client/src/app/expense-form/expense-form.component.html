@@ -1,8 +1,8 @@
 <form [formGroup]="expenseForm" (ngSubmit)="onSubmit()">
   <div class="form-group row m-2">
     <div class="col-sm-6">
-      <select [(ngModel)]="name" id="name" formControlName="name" placeholder="Név">
-        <option [ngValue]="undefined" hidden>Név</option>
+      <select id="name" formControlName="name" placeholder="Név">
+        <option [ngValue]="null" hidden>Név</option>
         <option *ngFor="let i of this.users" [value]="i.id">
           {{i.userName}}
         </option>

@@ -7,5 +7,6 @@ public class AuthenticationServiceImpl implements AuthenticationService{
     public User createUserEntity(User user){
         user.getUserName();
         user.getPassword();
+        return new User();
     }
 }

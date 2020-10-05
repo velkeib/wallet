@@ -12,6 +12,7 @@ import { ChartComponent } from './chart/chart.component';
 import { ExpenseFormComponent } from './expense-form/expense-form.component';
 import { LoginComponent } from './login/login.component';
 import { BasicAuthInterceptor } from './_helper/basic-auth.interceptor';
+import { RegistrationComponent } from './registration/registration.component';
 
 @NgModule({
   declarations: [
@@ -19,6 +20,7 @@ import { BasicAuthInterceptor } from './_helper/basic-auth.interceptor';
     ChartComponent,
     ExpenseFormComponent,
     LoginComponent,
+    RegistrationComponent,
   ],
   imports: [
     BrowserModule,

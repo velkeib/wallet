@@ -38,6 +38,11 @@ export class AuthenticationService {
             }));
     }
 
+    register(username: string, password: string, firstName: string, lastName: string){
+
+        return this.http.post<any>('http://localhost:8080/registration', { username, password, firstName, lastName} );
+    }
+
     logout() {
         // remove user from local storage to log user out
         localStorage.removeItem('user');

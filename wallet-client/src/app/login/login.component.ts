@@ -32,7 +32,7 @@ export class LoginComponent implements OnInit {
         });
 
         // get return url from route parameters or default to '/'
-        this.returnUrl = '/';
+        this.returnUrl = '/chart';
     }
 
     // convenience getter for easy access to form fields
@@ -52,7 +52,7 @@ export class LoginComponent implements OnInit {
             .subscribe(
                 data => {
                     console.log(data);
-                    //this.router.navigate([this.returnUrl]);
+                    this.router.navigate([this.returnUrl]);
                 },
                 error => {
                     this.error = error;

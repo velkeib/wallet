@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-
+import { AuthenticationService } from '../services/authentication.service';
+import { first } from 'rxjs/operators';
+import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-registration',
@@ -9,23 +11,40 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 })
 export class RegistrationComponent implements OnInit {
 
-  constructor(private formBuilder: FormBuilder) { }
+  constructor(private formBuilder: FormBuilder, private authenticationService: AuthenticationService, private router: Router,) { }
 
   registrationForm: FormGroup;
+  error = '';
+  loading = false;
 
   ngOnInit(): void {
 
     this.registrationForm = this.formBuilder.group({
-      name: ['', Validators.required],
-      amount: ['', Validators.required],
-      description: ['', Validators.required],
-      date: ['', Validators.required],
+      email: ['', Validators.required],
+      password: ['', Validators.required],
+      firstName: ['', Validators.required],
+      lastName: ['', Validators.required],
     });
 
   }
 
-  onSubmit(){
+  get f() { return this.registrationForm.controls; }
 
+  onSubmit() {
+
+    this.loading = true;
+    this.authenticationService.register(this.f.email.value, this.f.password.value, this.f.firstName.value, this.f.lastName.value)
+      .pipe(first())
+      .subscribe(
+        data => {
+          console.log(data);
+          this.loading = false;
+          this.router.navigate(['/login']);
+        },
+        error => {
+          this.error = error;
+          this.loading = false;
+        });
   }
 
 }

@@ -64,8 +64,8 @@ public class HomeController {
     public CommandLineRunner demo(UserRepository userRepository, ExpenseRepository expenseRepository) {
         return (args) -> {
 
-            userRepository.save(new User(1L, "Bence", "test"));
-            userRepository.save(new User(2L, "Gabika", "test2"));
+            userRepository.save(new User(1L, "Bence", "test", "", ""));
+            userRepository.save(new User(2L, "Gabika", "test2", "", ""));
 
             /*expenseRepository.save(new Expense(5L, 2000, "szék", userRepository.findById(1L).get(), new GregorianCalendar(2020, 5, 27)));
             expenseRepository.save(new Expense(6L, 2000, "szék", userRepository.findById(1L).get(), new GregorianCalendar(2020, 6, 27)));

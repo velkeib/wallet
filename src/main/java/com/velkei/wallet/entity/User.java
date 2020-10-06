@@ -14,8 +14,11 @@ import java.util.Set;
 @Data
 public class User {
 
-    public User(String  userName, String password){
-        
+    public User(String  userName, String password,  String firstName,  String lastName){
+        this.userName = userName;
+        this.password = password;
+        this.firstName = firstName;
+        this.lastName = lastName;
     }
 
     @Id
@@ -27,4 +30,12 @@ public class User {
 
     @Column
     private String password ;
+
+    @Column
+    private String firstName;
+
+    @Column
+    private String lastName ;
+
+
 }

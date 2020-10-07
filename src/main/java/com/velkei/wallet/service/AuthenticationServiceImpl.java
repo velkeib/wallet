@@ -15,7 +15,7 @@ public class AuthenticationServiceImpl implements AuthenticationService{
 
     @Override
     public User createUserEntity(User user) {
-        if(userRepository.findByUserName(user.getUserName()) != null){
+        if(userRepository.findByUserName(user.getUserName()) == null){
             return userRepository.save(new User(user.getUserName(), user.getPassword(), user.getFirstName(), user.getLastName()));
         }else{
             throw new EmailAlreadyExist();

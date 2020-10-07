@@ -25,7 +25,7 @@ public class AuthenticationController {
     }
 
 
-    @RequestMapping(value = "/register", method = RequestMethod.POST)
+    @RequestMapping(value = "/registration", method = RequestMethod.POST)
     @ResponseBody
     public ResponseEntity<?> userRegistration(@RequestBody User user){
 

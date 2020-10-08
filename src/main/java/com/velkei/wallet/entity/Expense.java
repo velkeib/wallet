@@ -24,7 +24,7 @@ public class Expense {
     private String description;
 
     @ManyToOne
-    @JoinColumn(name = "name", nullable=false)
+    @JoinColumn(name = "user_name")
     private User userName;
 
     @Column

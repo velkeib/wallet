@@ -3,7 +3,7 @@
     <div class="col-sm-6">
       <select id="name" formControlName="name" placeholder="Név">
         <option [ngValue]="null" hidden>Név</option>
-        <option *ngFor="let i of this.users" [value]="i.id">
+        <option *ngFor="let i of this.users" [value]="i.userName">
           {{i.userName}}
         </option>
       </select>

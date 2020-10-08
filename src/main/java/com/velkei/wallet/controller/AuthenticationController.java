@@ -21,7 +21,7 @@ public class AuthenticationController {
 
 
         return  ResponseEntity.ok()
-                .body(new User(1L, "asd", "asd", "asd", "asd"));
+                .body(new User("asd", "asd", "asd", "asd"));
     }
 
 

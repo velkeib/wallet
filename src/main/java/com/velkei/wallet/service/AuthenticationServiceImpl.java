@@ -7,16 +7,22 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.velkei.wallet.exception.ExceptionHandlerImpl;
 
+import org.springframework.security.crypto.password.*;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+
 @Service
 public class AuthenticationServiceImpl implements AuthenticationService{
 
     @Autowired
     UserRepository userRepository;
 
+    @Autowired
+    private BCryptPasswordEncoder passwordEncoder;
+
     @Override
     public User createUserEntity(User user) {
         if(userRepository.findByUserName(user.getUserName()) == null){
-            return userRepository.save(new User(user.getUserName(), user.getPassword(), user.getFirstName(), user.getLastName()));
+            return userRepository.save(new User(user.getUserName(), passwordEncoder.encode(user.getPassword()), user.getFirstName(), user.getLastName()));
         }else{
             throw new EmailAlreadyExist();
         }

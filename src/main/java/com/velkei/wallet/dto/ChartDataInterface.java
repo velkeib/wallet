@@ -6,7 +6,6 @@ import java.util.GregorianCalendar;
 
 public interface ChartDataInterface {
     int getAmount();
-    long getName();
     int getOff();
     int getRank();
     String getUserName();

@@ -10,7 +10,7 @@ import java.util.Calendar;
 import java.util.List;
 
 public interface ExpenseRepository extends CrudRepository<Expense, Long>{
-    @Query(value = "select sum(amount) as amount, name, month(date) - month(:date) as off, DENSE_RANK() OVER (ORDER BY name) as 'rank', u.user_name as userName from expense e inner join user u on e.name = u.id where date >= :date  group by name, month(date), year(date) order by name, year(date), month(date)", nativeQuery = true)
+    @Query(value = "select sum(amount) as amount, month(date) - month(:date) as off, DENSE_RANK() OVER (ORDER BY u.user_name) as 'rank', u.user_name as userName from expense e inner join user u on e.user_name = u.user_name where date >= :date  group by userName, month(date), year(date) order by userName, year(date), month(date)", nativeQuery = true)
     List<ChartDataInterface> getChartData(@Param("date") Calendar calendar);
 
 }

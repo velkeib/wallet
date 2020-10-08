@@ -12,7 +12,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-public class Group {
+public class UserGroup {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -21,6 +21,11 @@ public class Group {
     @Column
     private String groupName;
 
-    @Column
+    @ManyToMany
+    @JoinColumn(name = "group_users")
     private List<User> groupUsers;
+
+    @OneToOne
+    @JoinColumn(name = "group_owner")
+    private User groupOwner;
 }

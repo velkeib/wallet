@@ -14,17 +14,7 @@ import java.util.Set;
 @Data
 public class User {
 
-    public User(String  userName, String password,  String firstName,  String lastName){
-        this.userName = userName;
-        this.password = password;
-        this.firstName = firstName;
-        this.lastName = lastName;
-    }
-
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;
-
     @Column
     private String userName ;
 

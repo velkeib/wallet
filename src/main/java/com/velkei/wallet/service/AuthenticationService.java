@@ -4,6 +4,6 @@ import com.velkei.wallet.entity.User;
 
 public interface AuthenticationService {
 
-    public abstract User createUserEntity(User user);
+    public User createUserEntity(User user);
 
 }

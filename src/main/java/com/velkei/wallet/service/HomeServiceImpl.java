@@ -34,7 +34,7 @@ public class HomeServiceImpl implements HomeService {
 
             data[getChartDataResult.get(i).getRank() - 1][getChartDataResult.get(i).getOff()] = getChartDataResult.get(i).getAmount();
 
-            if(i < getChartDataResult.size() -1 && getChartDataResult.get(i).getName() != getChartDataResult.get(i + 1).getName()){
+            if(i < getChartDataResult.size() -1 && !getChartDataResult.get(i).getUserName().equals(getChartDataResult.get(i + 1).getUserName())){
                 response.add(new ChartData(getChartDataResult.get(i).getUserName(), data[getChartDataResult.get(i).getRank() - 1]));
             }
         }
@@ -55,7 +55,7 @@ public class HomeServiceImpl implements HomeService {
             calendar.setTime(date);
         }
         Expense expenseEntity = new Expense();
-        expenseEntity.setUserName(userRepository.findById(Long.parseLong(expense.getName())).get());
+        expenseEntity.setUserName(userRepository.findByUserName(expense.getName()));
         expenseEntity.setAmount(expense.getAmount());
         expenseEntity.setDescription(expense.getDescription());
         expenseEntity.setDate(calendar);

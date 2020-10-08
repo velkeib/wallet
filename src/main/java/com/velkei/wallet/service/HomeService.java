@@ -8,7 +8,7 @@ import java.util.ArrayList;
 
 public interface HomeService {
 
-    public abstract ArrayList<ChartData> getChartData();
-    public abstract Expense setExpenseEntity(ExpenseDTO expense) throws Exception;
+    public ArrayList<ChartData> getChartData();
+    public Expense setExpenseEntity(ExpenseDTO expense) throws Exception;
 
 }

@@ -1,12 +1,11 @@
 package com.velkei.wallet.controller;
 
-import com.velkei.wallet.dto.ChartData;
-import com.velkei.wallet.dto.ChartDataInterface;
 import com.velkei.wallet.WalletApplication;
-import com.velkei.wallet.dto.ChartPageResponse;
 import com.velkei.wallet.dto.ExpenseDTO;
+import com.velkei.wallet.entity.UserGroup;
 import com.velkei.wallet.entity.User;
 import com.velkei.wallet.repository.ExpenseRepository;
+import com.velkei.wallet.repository.UserGroupRepository;
 import com.velkei.wallet.repository.UserRepository;
 import com.velkei.wallet.service.HomeService;
 import org.slf4j.Logger;
@@ -34,11 +33,16 @@ public class HomeController {
     @Autowired
     private ExpenseRepository expenseRepository;
 
+    @Autowired
+    private UserGroupRepository groupRepository;
+
     private static final Logger log = LoggerFactory.getLogger(WalletApplication.class);
 
     @RequestMapping(value = "/expenses", method= RequestMethod.GET)
     @ResponseBody
-    public ResponseEntity<?> getExpenses(){
+    public ResponseEntity<?> getExpenses(Principal principal){
+
+        log.info(principal.toString());
 
         return ResponseEntity.ok()
                 .body(homeService.getChartData());
@@ -61,11 +65,18 @@ public class HomeController {
     }
 
     @Bean
-    public CommandLineRunner demo(UserRepository userRepository, ExpenseRepository expenseRepository) {
+    public CommandLineRunner demo(UserRepository userRepository, ExpenseRepository expenseRepository, UserGroupRepository groupRepository ) {
         return (args) -> {
 
-            userRepository.save(new User(1L, "Bence", "test", "", ""));
-            userRepository.save(new User(2L, "Gabika", "test2", "", ""));
+            userRepository.save(new User("Bence", "$2a$10$IT.xwh1CFa.k9xqzJsK3xOzYClrtvfHBm9PinY5UEAPvSU2CAmirO", "", ""));
+            userRepository.save(new User("Gabika", "test2", "", ""));
+
+            List<User> list = new ArrayList<>();
+            list.add(userRepository.findByUserName("Bence"));
+            list.add(userRepository.findByUserName("Gabika"));
+
+            groupRepository.save(new UserGroup(1L, "Elsőcsapat", list, userRepository.findByUserName("Bence")));
+
 
             /*expenseRepository.save(new Expense(5L, 2000, "szék", userRepository.findById(1L).get(), new GregorianCalendar(2020, 5, 27)));
             expenseRepository.save(new Expense(6L, 2000, "szék", userRepository.findById(1L).get(), new GregorianCalendar(2020, 6, 27)));
@@ -78,8 +89,11 @@ public class HomeController {
             expenseRepository.save(new Expense(11L, 2000, "szék", userRepository.findById(2L).get(), new GregorianCalendar(2020, 4, 27)));
             expenseRepository.save(new Expense(12L, 2000, "szék", userRepository.findById(2L).get(), new GregorianCalendar(2020, 5, 27)));
             expenseRepository.save(new Expense(13L, 2000, "szék", userRepository.findById(2L).get(), new GregorianCalendar(2020, 6, 27)));*/
-            expenseRepository.save(new Expense(14L, 0, "szék", userRepository.findById(1L).get(), new GregorianCalendar(2020, 7, 27)));
-            expenseRepository.save(new Expense(15L,     0, "szék", userRepository.findById(2L).get(), new GregorianCalendar(2020, 8, 27)));
+            expenseRepository.save(new Expense(14L, 0, "szék", userRepository.findByUserName("Bence"), new GregorianCalendar(2020, 7, 27)));
+            expenseRepository.save(new Expense(15L,     0, "szék", userRepository.findByUserName("Gabika"), new GregorianCalendar(2020, 8, 27)));
+
+
+
             //expenseRepository.save(new Expense(16L, 2000, "szék", userRepository.findById(2L).get(), new GregorianCalendar(2019, 8, 27)));
         };
     }

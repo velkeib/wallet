@@ -6,4 +6,6 @@ import com.velkei.wallet.entity.User;
 public interface GroupService {
 
     public UserGroup createGroup(User user, String groupName);
+
+    public UserGroup addGroupUser(long groupId, long userName);
 }

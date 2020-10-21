@@ -42,8 +42,6 @@ public class HomeController {
     @ResponseBody
     public ResponseEntity<?> getExpenses(Principal principal){
 
-        log.info(principal.toString());
-
         return ResponseEntity.ok()
                 .body(homeService.getChartData());
     }

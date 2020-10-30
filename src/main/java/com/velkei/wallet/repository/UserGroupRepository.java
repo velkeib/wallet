@@ -10,6 +10,6 @@ import java.util.List;
 
 public interface UserGroupRepository extends CrudRepository<UserGroup, Long> {
 
-    @Query(value = "select * from user_group_group_users where group_users_user_name = :user_name", nativeQuery = true)
+    @Query(value = "select * from user_group_group_users uggu left join user_group ug on uggu.user_group_group_id = ug.group_id where group_users_user_name = :user_name", nativeQuery = true)
     List<UserGroup> getUserGroupByUser(@Param("user_name") String userName);
 }

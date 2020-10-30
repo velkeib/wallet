@@ -5,6 +5,7 @@ import com.velkei.wallet.dto.ChartDataInterface;
 import com.velkei.wallet.dto.ExpenseDTO;
 import com.velkei.wallet.entity.Expense;
 import com.velkei.wallet.repository.ExpenseRepository;
+import com.velkei.wallet.repository.UserGroupRepository;
 import com.velkei.wallet.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,9 +23,12 @@ public class HomeServiceImpl implements HomeService {
     @Autowired
     private UserRepository userRepository;
 
+    @Autowired
+    private UserGroupRepository userGroupRepository;
+
     @Override
-    public ArrayList<ChartData> getChartData (){
-        List<ChartDataInterface> getChartDataResult = expenseRepository.getChartData(calculateSixMonthsBefore());
+    public ArrayList<ChartData> getChartData (String groupId){
+        List<ChartDataInterface> getChartDataResult = expenseRepository.getChartData(calculateSixMonthsBefore(), Long.parseLong(groupId));
 
         int[][] data = new int[2][6];
 
@@ -45,7 +49,7 @@ public class HomeServiceImpl implements HomeService {
     }
 
     @Override
-    public Expense setExpenseEntity(ExpenseDTO expense) throws Exception{
+    public Expense setExpenseEntity(ExpenseDTO expense, String groupId) throws Exception{
 
         GregorianCalendar calendar = new GregorianCalendar();
 
@@ -59,6 +63,8 @@ public class HomeServiceImpl implements HomeService {
         expenseEntity.setAmount(expense.getAmount());
         expenseEntity.setDescription(expense.getDescription());
         expenseEntity.setDate(calendar);
+        expenseEntity.setUserGroup(userGroupRepository.findById(Long.parseLong(groupId)).get());
+
 
         return expenseRepository.save(expenseEntity);
 

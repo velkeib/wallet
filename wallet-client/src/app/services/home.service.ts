@@ -9,15 +9,15 @@ export class HomeService {
 
   constructor(private httpclient: HttpClient) { }
 
-getExpenses(): Observable<any>{
-    return this.httpclient.get("http://localhost:8080/expenses");
+getExpenses(groupId: String): Observable<any>{
+    return this.httpclient.get("http://localhost:8080" + groupId);
 }
 
 getUsers(): Observable<any>{
   return this.httpclient.get("http://localhost:8080/users");
 }
 
-setExpenses(post: string): Observable<any>{
-    return this.httpclient.post("http://localhost:8080/expenses", post);
+setExpenses(post: string, groupId: String): Observable<any>{
+    return this.httpclient.post("http://localhost:8080" + groupId, post);
 }
 }

@@ -32,7 +32,7 @@ public class GroupServiceImpl implements GroupService {
 
     public List<UserGroup> getGroups(User user){
 
-        return userGroupRepository.;
+        return userGroupRepository.getUserGroupByUser(user.getUserName());
     }
 
     public UserGroup addGroupUser(long groupId, String email){

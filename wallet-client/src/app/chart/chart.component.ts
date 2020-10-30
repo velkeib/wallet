@@ -1,4 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
+import { Router } from '@angular/router';
 import { Chart } from 'node_modules/chart.js';
 import { HomeService } from '../services/home.service';
 import { Expense } from '../model/expense';
@@ -12,7 +13,7 @@ import { ExpenseFormComponent } from '../expense-form/expense-form.component';
 export class ChartComponent implements OnInit {
 
 
-  constructor(private homeService: HomeService) { }
+  constructor(private homeService: HomeService, private router: Router) { }
 
 
   colors = [];
@@ -29,7 +30,9 @@ export class ChartComponent implements OnInit {
 
     this.loading = true;
 
-    this.homeService.getExpenses().subscribe(
+
+
+    this.homeService.getExpenses(this.router.url).subscribe(
       data => {
         this.expenses = data;
         this.loadChart();

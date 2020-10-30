@@ -13,4 +13,6 @@ public class ExpenseDTO {
 
     private String date;
 
+    private String groupId;
+
 }

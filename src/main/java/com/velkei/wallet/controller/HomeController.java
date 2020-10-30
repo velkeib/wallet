@@ -38,12 +38,12 @@ public class HomeController {
 
     private static final Logger log = LoggerFactory.getLogger(WalletApplication.class);
 
-    @RequestMapping(value = "/expenses", method= RequestMethod.GET)
+    @RequestMapping(value = "/group/{groupId}", method= RequestMethod.GET)
     @ResponseBody
-    public ResponseEntity<?> getExpenses(Principal principal){
+    public ResponseEntity<?> getExpenses(@PathVariable String groupId, Principal principal){
 
         return ResponseEntity.ok()
-                .body(homeService.getChartData());
+                .body(homeService.getChartData(groupId));
     }
 
     @RequestMapping(value = "/users", method= RequestMethod.GET)
@@ -54,12 +54,12 @@ public class HomeController {
                 .body(userRepository.findAll());
     }
 
-    @RequestMapping(value = "/expenses", method= RequestMethod.POST)
+    @RequestMapping(value = "/group/{groupId}", method= RequestMethod.POST)
     @ResponseBody
-    public ResponseEntity<?> setExpenses(@RequestBody ExpenseDTO expense) throws Exception{
+    public ResponseEntity<?> setExpenses(@RequestBody ExpenseDTO expense, @PathVariable String groupId) throws Exception{
 
         return ResponseEntity.ok()
-                .body(homeService.setExpenseEntity(expense));
+                .body(homeService.setExpenseEntity(expense, groupId));
     }
 
     @Bean
@@ -87,8 +87,8 @@ public class HomeController {
             expenseRepository.save(new Expense(11L, 2000, "szék", userRepository.findById(2L).get(), new GregorianCalendar(2020, 4, 27)));
             expenseRepository.save(new Expense(12L, 2000, "szék", userRepository.findById(2L).get(), new GregorianCalendar(2020, 5, 27)));
             expenseRepository.save(new Expense(13L, 2000, "szék", userRepository.findById(2L).get(), new GregorianCalendar(2020, 6, 27)));*/
-            expenseRepository.save(new Expense(14L, 0, "szék", userRepository.findByUserName("Bence"), new GregorianCalendar(2020, 7, 27)));
-            expenseRepository.save(new Expense(15L,     0, "szék", userRepository.findByUserName("Gabika"), new GregorianCalendar(2020, 8, 27)));
+            expenseRepository.save(new Expense(14L, 0, "szék", userRepository.findByUserName("Bence"), new GregorianCalendar(2020, 7, 27), groupRepository.findById(1L).get()));
+            expenseRepository.save(new Expense(15L,     0, "szék", userRepository.findByUserName("Gabika"), new GregorianCalendar(2020, 8, 27), groupRepository.findById(1L).get()));
 
 
 

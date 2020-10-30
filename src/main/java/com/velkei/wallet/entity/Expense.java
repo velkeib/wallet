@@ -30,4 +30,8 @@ public class Expense {
     @Column
     private Calendar date;
 
+    @ManyToOne
+    @JoinColumn(name = "user_group")
+    private UserGroup userGroup;
+
 }

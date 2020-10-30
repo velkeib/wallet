@@ -19,7 +19,6 @@ export class BasicAuthInterceptor implements HttpInterceptor {
         const isApiUrl = request.url.startsWith('http://localhost:8080');
         
         if (isLoggedIn && isApiUrl) {
-            console.log('fefe');
             request = request.clone({
                 setHeaders: { 
                     Authorization: `Basic ${user.authdata}`

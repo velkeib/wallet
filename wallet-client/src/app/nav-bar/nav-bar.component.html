@@ -1,0 +1,8 @@
+<div id="mySidenav" class="sidenav">
+  <a class="nav-item nav-link" (click)="logout()" *ngIf="user">Logout</a>
+  <a class="paddingbottom">Csoportok</a>
+  <a class="grouppadding" href="group/{{group.groupId}}" *ngFor="let group of groups">- {{group.groupName}}</a>
+  <div clas="row">
+    <a class="inputfield">- </a>
+    <input class="inputfield"></div>
+</div>

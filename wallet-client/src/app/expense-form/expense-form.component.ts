@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { HomeService } from '../services/home.service';
 import { User } from '../model/user';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
@@ -11,7 +12,10 @@ import { ChartComponent } from '../chart/chart.component';
 })
 export class ExpenseFormComponent implements OnInit {
 
-  constructor(private formBuilder: FormBuilder, private homeService: HomeService, private chartComponent: ChartComponent) { }
+  constructor(private formBuilder: FormBuilder, 
+    private homeService: HomeService, 
+    private chartComponent: ChartComponent,
+    private router: Router) { }
 
   expenseForm: FormGroup;
 
@@ -35,7 +39,6 @@ export class ExpenseFormComponent implements OnInit {
     this.homeService.getUsers().subscribe(
       data => {
         this.users = data;
-        console.log(this.users);
       }
     )
   }
@@ -43,11 +46,11 @@ export class ExpenseFormComponent implements OnInit {
   onSubmit() {
     console.log(this.expenseForm.value);
 
-    this.homeService.setExpenses(this.expenseForm.value).subscribe(
+    this.homeService.setExpenses(this.expenseForm.value, this.router.url).subscribe(
       data => {
         this.expenses = data;
 
-        this.homeService.getExpenses().subscribe(
+        this.homeService.getExpenses(this.router.url).subscribe(
           data => {
             this.chartComponent.expenses = data;
             this.chartComponent.updateChart();

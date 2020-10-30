@@ -13,6 +13,7 @@ import { ExpenseFormComponent } from './expense-form/expense-form.component';
 import { LoginComponent } from './login/login.component';
 import { BasicAuthInterceptor } from './_helper/basic-auth.interceptor';
 import { RegistrationComponent } from './registration/registration.component';
+import { NavBarComponent } from './nav-bar/nav-bar.component';
 
 @NgModule({
   declarations: [
@@ -21,6 +22,7 @@ import { RegistrationComponent } from './registration/registration.component';
     ExpenseFormComponent,
     LoginComponent,
     RegistrationComponent,
+    NavBarComponent,
   ],
   imports: [
     BrowserModule,

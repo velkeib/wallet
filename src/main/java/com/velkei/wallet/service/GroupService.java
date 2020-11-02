@@ -8,7 +8,7 @@ import java.util.Optional;
 
 public interface GroupService {
 
-    public UserGroup createGroup(User user, String groupName);
+    public List<UserGroup> createGroup(User user, String groupName);
 
     public UserGroup addGroupUser(long groupId, String email);
 

@@ -13,4 +13,8 @@ export class GroupService {
     return this.httpclient.get("http://localhost:8080/getgroups");
   }
 
+  createGroup(groupName): Observable<any>{
+    return this.httpclient.post<any>("http://localhost:8080/creategroup", { groupName });
+  }
+
 }

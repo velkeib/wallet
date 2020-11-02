@@ -17,6 +17,7 @@ export class NavBarComponent implements OnInit {
 
   user: User;
   groups: Group[];
+  groupName: String;
 
   constructor(
     private router: Router,
@@ -38,6 +39,14 @@ export class NavBarComponent implements OnInit {
 
   logout() {
     this.authenticationService.logout();
+  }
+
+  createGroup(){
+    this.groupService.createGroup(this.groupName).pipe(first()).subscribe(
+      data => {
+        this.groups = data;
+        console.log(this.groups);
+      });;
   }
 
 }

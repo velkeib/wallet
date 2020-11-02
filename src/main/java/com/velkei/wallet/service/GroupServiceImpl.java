@@ -7,6 +7,7 @@ import com.velkei.wallet.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -20,14 +21,20 @@ public class GroupServiceImpl implements GroupService {
     UserRepository userRepository;
 
     @Override
-    public UserGroup createGroup(User user, String groupName) {
+    public List<UserGroup> createGroup(User user, String groupName) {
 
         UserGroup group = new UserGroup();
 
         group.setGroupOwner(user);
         group.setGroupName(groupName);
 
-        return userGroupRepository.save(group);
+        List<User> groupUsers = new ArrayList<>();
+        groupUsers.add(user);
+        group.setGroupUsers(groupUsers);
+
+        userGroupRepository.save(group);
+
+        return userGroupRepository.getUserGroupByUser(user.getUserName());
     }
 
     public List<UserGroup> getGroups(User user){

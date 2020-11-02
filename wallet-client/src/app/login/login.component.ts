@@ -10,7 +10,7 @@ export class LoginComponent implements OnInit {
     loginForm: FormGroup;
     loading = false;
     submitted = false;
-    returnUrl: string;
+    returnUrl = '/login';
     error = '';
 
     constructor(
@@ -52,7 +52,7 @@ export class LoginComponent implements OnInit {
             .subscribe(
                 data => {
                     console.log(data);
-                    this.router.navigate([this.returnUrl]);
+                    this.router.navigate(['/registration']);
                 },
                 error => {
                     this.error = error;

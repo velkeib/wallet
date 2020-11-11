@@ -46,12 +46,20 @@ public class HomeController {
                 .body(homeService.getChartData(groupId));
     }
 
-    @RequestMapping(value = "/users", method= RequestMethod.GET)
+    @RequestMapping(value = "/users/{groupId:[\\d]+}", method= RequestMethod.GET)
     @ResponseBody
-    public ResponseEntity<?> getUsers(){
+    public ResponseEntity<?> getUsers(@PathVariable long groupId){
 
         return ResponseEntity.ok()
-                .body(userRepository.findAll());
+                .body(userRepository.findById());
+    }
+
+    @RequestMapping(value = "/expenses/{groupId:[\\d]+}", method= RequestMethod.GET)
+    @ResponseBody
+    public ResponseEntity<?> getExpensesPage(@PathVariable long groupId, @RequestParam int page){
+
+        return ResponseEntity.ok()
+                .body(homeService.getExpensePaged(groupId, page-1));
     }
 
     @RequestMapping(value = "/group/{groupId}", method= RequestMethod.POST)
@@ -66,14 +74,14 @@ public class HomeController {
     public CommandLineRunner demo(UserRepository userRepository, ExpenseRepository expenseRepository, UserGroupRepository groupRepository ) {
         return (args) -> {
 
-            userRepository.save(new User("Bence", "$2a$10$IT.xwh1CFa.k9xqzJsK3xOzYClrtvfHBm9PinY5UEAPvSU2CAmirO", "", ""));
-            userRepository.save(new User("Gabika", "test2", "", ""));
+            //userRepository.save(new User("og@gmail.com", "$2a$10$IT.xwh1CFa.k9xqzJsK3xOzYClrtvfHBm9PinY5UEAPvSU2CAmirO", "Bence", "Velkei"));
+            //userRepository.save(new User("vb@gmail.com", "test2", "Gabriella", "Orosz"));
 
-            List<User> list = new ArrayList<>();
-            list.add(userRepository.findByUserName("Bence"));
-            list.add(userRepository.findByUserName("Gabika"));
+            //List<User> list = new ArrayList<>();
+            //list.add(userRepository.findByUserName("vb@gmail.com"));
+            //list.add(userRepository.findByUserName("og@gmail.com"));
 
-            groupRepository.save(new UserGroup(1L, "Elsőcsapat", list, userRepository.findByUserName("Bence")));
+            //groupRepository.save(new UserGroup(1L, "Velkei család", list, userRepository.findByUserName("vb@gmail.com")));
 
 
             /*expenseRepository.save(new Expense(5L, 2000, "szék", userRepository.findById(1L).get(), new GregorianCalendar(2020, 5, 27)));
@@ -87,8 +95,8 @@ public class HomeController {
             expenseRepository.save(new Expense(11L, 2000, "szék", userRepository.findById(2L).get(), new GregorianCalendar(2020, 4, 27)));
             expenseRepository.save(new Expense(12L, 2000, "szék", userRepository.findById(2L).get(), new GregorianCalendar(2020, 5, 27)));
             expenseRepository.save(new Expense(13L, 2000, "szék", userRepository.findById(2L).get(), new GregorianCalendar(2020, 6, 27)));*/
-            expenseRepository.save(new Expense(14L, 0, "szék", userRepository.findByUserName("Bence"), new GregorianCalendar(2020, 7, 27), groupRepository.findById(1L).get()));
-            expenseRepository.save(new Expense(15L,     0, "szék", userRepository.findByUserName("Gabika"), new GregorianCalendar(2020, 8, 27), groupRepository.findById(1L).get()));
+            //expenseRepository.save(new Expense(14L, 0, "szék", userRepository.findByUserName("vb@gmail.com"), new GregorianCalendar(2020, 7, 27), groupRepository.findById(1L).get()));
+            //expenseRepository.save(new Expense(15L,     0, "szék", userRepository.findByUserName("og@gmail.com"), new GregorianCalendar(2020, 8, 27), groupRepository.findById(1L).get()));
 
 
 

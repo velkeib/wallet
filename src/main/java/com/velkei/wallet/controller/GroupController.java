@@ -44,4 +44,10 @@ public class GroupController {
 
         return ResponseEntity.ok().body(groupService.addGroupUser(Long. parseLong(id), email.getEmail()));
     }
+
+    @RequestMapping(value = "/getgroupmembers/{id}", method = RequestMethod.GET)
+    public ResponseEntity<?> getGroupMembers(@PathVariable String id, Principal principal){
+
+        return ResponseEntity.ok().body(groupService.getGroupMembers(Long.parseLong(id)));
+    }
 }

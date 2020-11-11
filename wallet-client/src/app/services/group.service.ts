@@ -17,4 +17,8 @@ export class GroupService {
     return this.httpclient.post<any>("http://localhost:8080/creategroup", { groupName });
   }
 
+  addGroupMember(groupId, email): Observable<any>{
+    return this.httpclient.post<any>("http://localhost:8080/addgroupmember/" + groupId, { email });
+  }
+
 }

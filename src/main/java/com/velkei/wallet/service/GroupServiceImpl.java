@@ -1,5 +1,6 @@
 package com.velkei.wallet.service;
 
+import com.velkei.wallet.dto.UserInterface;
 import com.velkei.wallet.entity.UserGroup;
 import com.velkei.wallet.entity.User;
 import com.velkei.wallet.repository.UserGroupRepository;
@@ -42,7 +43,7 @@ public class GroupServiceImpl implements GroupService {
         return userGroupRepository.getUserGroupByUser(user.getUserName());
     }
 
-    public UserGroup addGroupUser(long groupId, String email){
+    public List<UserInterface> addGroupUser(long groupId, String email){
 
         UserGroup userGroup = userGroupRepository.findById(groupId).get();
 
@@ -52,6 +53,13 @@ public class GroupServiceImpl implements GroupService {
 
         userGroup.setGroupUsers(groupUsers);
 
-        return userGroupRepository.save(userGroup);
+        userGroupRepository.save(userGroup);
+
+        return userGroupRepository.getGroupUsers(groupId);
+    }
+
+    public List<UserInterface> getGroupMembers(long id){
+
+        return userGroupRepository.getGroupUsers(id);
     }
 }

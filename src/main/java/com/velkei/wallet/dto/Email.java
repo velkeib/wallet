@@ -9,7 +9,5 @@ import lombok.Value;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Email {
-
     String email;
-
 }

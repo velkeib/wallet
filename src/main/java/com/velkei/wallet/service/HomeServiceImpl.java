@@ -3,11 +3,15 @@ package com.velkei.wallet.service;
 import com.velkei.wallet.dto.ChartData;
 import com.velkei.wallet.dto.ChartDataInterface;
 import com.velkei.wallet.dto.ExpenseDTO;
+import com.velkei.wallet.dto.ExpenseListInterface;
 import com.velkei.wallet.entity.Expense;
 import com.velkei.wallet.repository.ExpenseRepository;
 import com.velkei.wallet.repository.UserGroupRepository;
 import com.velkei.wallet.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.text.DateFormat;
@@ -30,7 +34,7 @@ public class HomeServiceImpl implements HomeService {
     public ArrayList<ChartData> getChartData (String groupId){
         List<ChartDataInterface> getChartDataResult = expenseRepository.getChartData(calculateSixMonthsBefore(), Long.parseLong(groupId));
 
-        int[][] data = new int[2][6];
+        int[][] data = new int[userGroupRepository.getGroupUserCount(Long.parseLong(groupId))][6];
 
         ArrayList<ChartData> response = new ArrayList<>();
 
@@ -68,6 +72,12 @@ public class HomeServiceImpl implements HomeService {
 
         return expenseRepository.save(expenseEntity);
 
+    }
+
+    public Page<ExpenseListInterface> getExpensePaged(long groupId, int page){
+
+        Pageable pages = PageRequest.of(page, 5);
+        return expenseRepository.findByUserGroup(groupId, pages);
     }
 
     public static Calendar calculateSixMonthsBefore(){

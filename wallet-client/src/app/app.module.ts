@@ -14,6 +14,8 @@ import { LoginComponent } from './login/login.component';
 import { BasicAuthInterceptor } from './_helper/basic-auth.interceptor';
 import { RegistrationComponent } from './registration/registration.component';
 import { NavBarComponent } from './nav-bar/nav-bar.component';
+import { NewmemberFormComponent } from './newmember-form/newmember-form.component';
+import { ExpenseListComponent } from './expense-list/expense-list.component';
 
 @NgModule({
   declarations: [
@@ -23,6 +25,8 @@ import { NavBarComponent } from './nav-bar/nav-bar.component';
     LoginComponent,
     RegistrationComponent,
     NavBarComponent,
+    NewmemberFormComponent,
+    ExpenseListComponent,
   ],
   imports: [
     BrowserModule,

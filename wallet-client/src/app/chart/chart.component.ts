@@ -4,6 +4,7 @@ import { Chart } from 'node_modules/chart.js';
 import { HomeService } from '../services/home.service';
 import { Expense } from '../model/expense';
 import { ExpenseFormComponent } from '../expense-form/expense-form.component';
+import { Dataset } from '../model/dataset';
 
 @Component({
   selector: 'app-chart',
@@ -27,10 +28,7 @@ export class ChartComponent implements OnInit {
 
 
   ngOnInit() {
-
     this.loading = true;
-
-
 
     this.homeService.getExpenses(this.router.url).subscribe(
       data => {
@@ -43,31 +41,31 @@ export class ChartComponent implements OnInit {
   }
 
   loadChart() {
+ 
+    var datasets = [];
+    var names = [];
+    var doughnutData = [];
+    var doughnutColor = [];
 
+    for(var i = 0; i < this.expenses.length; i++){
+      var dataset = new Dataset(this.expenses[i].name, i, this.expenses[i].data);
+      dataset.setColor(i);
+      names.push(this.expenses[i].name);
+      doughnutData.push(this.expenses[i].data[5]);
+      this.colors.push(dataset.getColor());
+      datasets.push(dataset);
+  }
 
-    var bar_ctx =  (<Chart> document.getElementById('expenseChart')).getContext('2d');
-
-    var background_1 = bar_ctx.createLinearGradient(0, 0, 0, 300);
-    background_1.addColorStop(0, '#FFE400');
-    background_1.addColorStop(1, '#FF5733');
-
-    var background_2 = bar_ctx.createLinearGradient(0, 0, 0, 300);
-    background_2.addColorStop(0, '#00FFD1');
-    background_2.addColorStop(1, '#00BDDA');
-
-
-
-    this.colors.push('linear-gradient(to bottom right, #FFE400 , #FF5733)');
-    this.colors.push('linear-gradient(to bottom right, #00FFD1 , #00BDDA)');
+    console.log(this.colors);
 
     this.myDoughnutChart = new Chart('doughnutChart', {
       type: 'doughnut',
       data: {
-        labels: [this.expenses[0].name, this.expenses[1].name],
+        labels: names,
         datasets: [
           {
-            backgroundColor: [background_1, background_2, "#3cba9f", "#e8c3b9", "#c45850"],
-            data: [this.expenses[0].data[5], this.expenses[1].data[5]]
+            backgroundColor: this.colors,
+            data: doughnutData
           }
         ]
       },
@@ -75,7 +73,8 @@ export class ChartComponent implements OnInit {
         responsive: true,
         maintainAspectRatio: false,
         legend: {
-          display: false,
+          display: true,
+          position: 'bottom',
         },
         title: {
           display: false,
@@ -89,24 +88,15 @@ export class ChartComponent implements OnInit {
       type: 'bar',
       data: {
         labels: this.getLastSixMonths(),
-        datasets: [{
-          label: this.expenses[0].name,
-          backgroundColor:  background_1,
-          stack: 'Stack 0',
-          data: this.expenses[0].data
-        }, {
-          label: this.expenses[1].name,
-          backgroundColor: background_2,
-          stack: 'Stack 1',
-          data: this.expenses[1].data
-        }]
+        datasets: datasets
 
       },
       options: {
         responsive: true,
         maintainAspectRatio: false,
         legend: {
-          display: false,
+          display: true,
+          position: 'right'
         },
         scales: {
           yAxes: [{
@@ -199,8 +189,6 @@ export class ChartComponent implements OnInit {
 
       this.doughnutChartExpenses.push(new Expense(this.expenses[i].name, sum));
     }
-
-    console.log(this.doughnutChartExpenses);
 
   }
 

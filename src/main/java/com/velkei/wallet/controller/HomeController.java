@@ -51,7 +51,7 @@ public class HomeController {
     public ResponseEntity<?> getUsers(@PathVariable long groupId){
 
         return ResponseEntity.ok()
-                .body(userRepository.findById());
+                .body(userRepository.findAll());
     }
 
     @RequestMapping(value = "/expenses/{groupId:[\\d]+}", method= RequestMethod.GET)
